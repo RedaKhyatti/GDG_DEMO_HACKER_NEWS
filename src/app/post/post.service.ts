@@ -21,6 +21,10 @@ export class PostService {
   getPost(postKey:string){
     return this.db.object('/posts/'+postKey);
   }
+
+  deletePost(postKey:string){
+    this.db.object('/posts/'+postKey).remove();
+  }
   
   publishPost(message:string){
     this.authService.user.subscribe((user)=>{
@@ -60,5 +64,20 @@ export class PostService {
   
   getPostLikes(postKey:string){
     return this.db.list('/posts/'+postKey+'/likes');
+  }
+
+  addComment(postKey:string,message:string){
+    let comment = {'message':message,'createdDate':firebase.database['ServerValue']['TIMESTAMP'],'sender':this.user.uid};
+    console.log(comment);
+    this.db.list('/posts/'+postKey+'/comments').push(comment);
+  }
+
+  getComments(postKey:string){
+    return this.db.list('/posts/'+postKey+'/comments');
+  }
+
+
+  deleteComment(postKey:string , commentKey:string){
+    return this.db.object('/posts/'+postKey+"/comments/"+commentKey).remove();
   }
 }

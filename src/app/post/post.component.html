@@ -4,4 +4,22 @@
   <p>{{ (post.post.createdDate/1000 | amFromUnix) | amTimeAgo }}</p>
   <a (click)="like()" *ngIf="!hasUserLikes"> <span *ngIf="likes?.length">({{likes?.length}})</span> like</a>
   <a (click)="unlike()" *ngIf="hasUserLikes"> <span *ngIf="likes?.length">({{likes?.length}})</span> unlike</a>
+  <a (click)="deletePost()" *ngIf="isUserPost">Delete post</a>
+  <md-card>
+    <form (ngSubmit)="addComment()" [formGroup]="commentForm">
+      <md-input-container>
+        <input mdInput type="text" placeholder="What's new in GDG?" formControlName="message"/>
+      </md-input-container>
+      <br/>
+      <button md-raised-button color="primary" type="submit" [disabled]="!commentForm.valid">Comment</button>
+    </form>
+  </md-card>
+
+  <md-card *ngFor="let comment of comments">
+    <div *ngFor="let sender of (comment?.sender | async)">
+      <p>{{comment?.message}} by <small>{{user?.uid == sender?.uid?'You':sender?.dislayName}} <i>{{(comment.createdDate/1000 | amFromUnix) | amTimeAgo}}</i></small></p>
+      <button (click)="deleteComment(comment?.$key)" *ngIf="user?.uid == sender?.uid"> detelete</button>
+    </div>
+  </md-card>
 </md-card>
+
