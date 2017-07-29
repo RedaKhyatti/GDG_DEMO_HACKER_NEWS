@@ -1,0 +1,10 @@
+<md-card>
+  <h2>Add a new post!</h2>
+  <form (ngSubmit)="publish()" [formGroup]="postForm" >
+    <md-input-container>
+      <input mdInput type="text" placeholder="What's new in GDG?" formControlName="message"/>
+    </md-input-container>
+    <br/>
+    <button md-raised-button color="primary" type="submit" [disabled]="!postForm.valid">Publish</button>
+  </form>
+</md-card>

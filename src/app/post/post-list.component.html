@@ -1,0 +1,10 @@
+<app-post-form class="text-center" *ngIf="user"></app-post-form>
+<hr/>
+<div *ngIf="posts?.length > 0">
+  <app-post *ngFor="let post of posts" [post]="post"></app-post>
+</div>
+<div *ngIf="posts?.length == 0">
+  <md-card>
+    <p class="text-center">Aucun poste à afficher</p>
+  </md-card>
+</div>

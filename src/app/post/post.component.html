@@ -1,0 +1,7 @@
+<md-card>
+  <p>{{post.post.message}}</p>
+  <p>{{post.sender.dislayName}}</p>
+  <p>{{ (post.post.createdDate/1000 | amFromUnix) | amTimeAgo }}</p>
+  <a (click)="like()" *ngIf="!hasUserLikes"> <span *ngIf="likes?.length">({{likes?.length}})</span> like</a>
+  <a (click)="unlike()" *ngIf="hasUserLikes"> <span *ngIf="likes?.length">({{likes?.length}})</span> unlike</a>
+</md-card>
