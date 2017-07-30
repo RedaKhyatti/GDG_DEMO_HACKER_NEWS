@@ -1,13 +1,12 @@
 <md-toolbar color="primary">
-  <h1>GDG Rabat Hacker News !</h1>
-  <button md-raised-button
-          color="primary"
-          *ngIf="user"
-          [mdMenuTriggerFor]="menu"
-          style="margin-left: 80px ;">Menu</button>
-  <md-menu #menu="mdMenu">
-    <button md-menu-item (click)="logout()">logout</button>
-    <button md-menu-item>My account</button>
-  </md-menu>
+  	<h1>GDG Rabat Hacker News !</h1>
+ 		<button md-raised-button
+        	color="primary"
+          	[mdMenuTriggerFor]="menu"
+          	*ngIf="user"
+          	style="margin-left: 80px ;">Menu</button>
+  	<md-menu #menu="mdMenu">
+    	<button md-menu-item (click)="logout()">logout</button>
+  	</md-menu>
 </md-toolbar>
 <router-outlet></router-outlet>

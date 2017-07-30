@@ -25,14 +25,16 @@ export class PostComponent implements OnInit {
 
   ngOnInit() {
     this.authService.user.subscribe((user)=>{
-      this.user = user;
-      console.log(this.post.sender);
-      if(user.uid != this.post.sender.uid){
-        this.isUserPost = false;
+      if(user){
+        this.user = user;
+        if(user.uid != this.post.sender.uid){
+          this.isUserPost = false;
+        }
+        else{
+          this.isUserPost = true;
+        }
       }
-      else{
-        this.isUserPost = true;
-      }
+      
     });
 
     this.postService.hasUserLikedPost(this.post.post.$key).subscribe((likes)=>{

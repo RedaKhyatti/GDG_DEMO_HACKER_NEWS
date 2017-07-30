@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/auth.service';
 
+import { AuthService } from './auth/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,20 +9,19 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit{
   
   user;
-  constructor(private authService:AuthService){
 
-  }
+  constructor(private authService:AuthService){}
 
   ngOnInit(){
-    let self = this;
-    this.authService.user.subscribe(function(user){
-      if(user){        
-        self.user = user;
-      }
-    });
+    this.authService.user.subscribe((user)=>{
+      this.user = user;
+    })
   }
 
   logout(){
-    this.authService.logout();
+    console.log('login out');
+    this.authService.logout().then((obj)=>{
+      console.log(obj);
+    })
   }
 }

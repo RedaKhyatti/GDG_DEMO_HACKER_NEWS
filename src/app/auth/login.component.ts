@@ -27,31 +27,31 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    let self = this;
-    this.authService.user.subscribe(function(user){
+    this.authService.user.subscribe((user)=>{
       if(user && user.uid){
-        self.user = user;
-        self.router.navigate(['/posts']);
+        this.user = user;
+        this.router.navigate(['/posts']);
       } 
     });
   }
 
   signup() {
-    this.router.navigate(['authenticate/signup']);
+    this.router.navigate(['signup']);
   }
 
   login() {
-    let self = this;
-    if(this.loginForm.valid){
-      this.authService.login(this.loginForm.controls['email'].value,this.loginForm.controls['password'].value)
-      .then(function(response){
-        //User has just lo
-
-      })      
-      .catch(function(error){
-        self.loginError = error.message;
-      })
-    }
+    this.loginForm.controls['email'].enable();
+    this.loginForm.controls['password'].enable();
+    this.authService.login(this.loginForm.controls['email'].value,this.loginForm.controls['password'].value)
+    .then(function(response){
+      //User has just logedIn
+      //this.router.navigate(['/posts']);
+    })      
+    .catch(function(error){
+      this.loginForm.controls['email'].disable();
+      this.loginForm.controls['password'].disable();
+      this.loginError = error.message;
+    })
   }
 
   logout() {
@@ -59,11 +59,10 @@ export class LoginComponent implements OnInit {
   }
 
   onGoogleLogin(){
-    let self = this;
-    this.authService.loginGoogle().then(function(response){
-      self.authService.isUserSaved().subscribe((obj)=>  {
+    this.authService.loginGoogle().then((response)=>{
+      this.authService.isUserSaved().subscribe((obj)=>  {
 	      	if(obj.length === 0){
-	        	self.authService.saveNewUser();
+	        	this.authService.saveGoogleUser();
 	      	}
 	    });
     })

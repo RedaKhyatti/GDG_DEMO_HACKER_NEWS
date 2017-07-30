@@ -21,8 +21,7 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
 
 import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
-
+import { AuthService } from './auth/auth.service';
 
 export const firebaseConfig={
     apiKey: "AIzaSyCBJd3BjzYnEh4j7xY5wQegpbmHLuTT_6w",
@@ -50,12 +49,12 @@ export const firebaseConfig={
     MdCardModule,
     MdIconModule,
     MdInputModule,
-    MdMenuModule,
-    AuthModule
+    MdMenuModule
   ],
   providers: [
     AngularFireAuth,
-    AngularFireDatabase
+    AngularFireDatabase,
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

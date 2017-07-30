@@ -1,1 +1,28 @@
-Signup
+<md-card>
+    <md-card-header>
+        <md-card-title>
+            <h2>Create an account</h2>
+        </md-card-title>
+    </md-card-header>
+    <md-card-content>
+        <md-card class="text-center">
+            <form (ngSubmit)="signup()" [formGroup]="signupForm" >
+                <p *ngIf="loginError">{{loginError}}</p>
+                <md-input-container>
+                    <input mdInput type="text" placeholder="Username" formControlName="displayName"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <input mdInput type="text" placeholder="email" formControlName="email"/>
+                </md-input-container>
+                <br/>
+                <md-input-container>
+                    <input mdInput type="password" placeholder="password" formControlName="password"/>
+                </md-input-container>
+                <br/>
+                <button md-raised-button color="primary" type="submit" [disabled]="!signupForm.valid">Signup</button>
+                <button md-raised-button color="secondary" type="button" (click)="back()">back</button>
+            </form>
+        </md-card>
+    </md-card-content>
+</md-card>

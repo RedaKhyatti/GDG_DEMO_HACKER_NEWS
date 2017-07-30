@@ -13,11 +13,9 @@ export class AuthService {
   user = new BehaviorSubject(null);
   
   constructor(private firebaseAuth: AngularFireAuth, private db: AngularFireDatabase, private router:Router) {
-    let self = this;
-    firebaseAuth.authState.subscribe(function(state){
-      if(state){
-        self.user.next(state);
-      }
+    firebaseAuth.authState.subscribe((user)=>{
+      console.log(user);
+      this.user.next(user);
     })
   }
 
@@ -42,8 +40,7 @@ export class AuthService {
 
   logout() {
     console.log('sign out');
-    this.user.next(null);
-    this.firebaseAuth
+    return this.firebaseAuth
         .auth
         .signOut();
   }
@@ -54,13 +51,23 @@ export class AuthService {
 		}
 	}
 
-	saveNewUser(){
+	saveGoogleUser(){
     let user = {
       'uid':this.firebaseAuth.auth.currentUser.uid,
       'email':this.firebaseAuth.auth.currentUser.email,
       'dislayName':this.firebaseAuth.auth.currentUser.displayName,
       'photoUrl':this.firebaseAuth.auth.currentUser.photoURL,
       'phoneNumber':this.firebaseAuth.auth.currentUser.phoneNumber
+    }
+		return this.db.list('/users').push(user)
+		  .catch(error => console.log('ERROR @ AuthService#saveNewUser() :', error));
+  }
+
+  saveCustomUser(displayName:string){
+    let user = {
+      'uid':this.firebaseAuth.auth.currentUser.uid,
+      'email':this.firebaseAuth.auth.currentUser.email,
+      'dislayName':displayName
     }
 		return this.db.list('/users').push(user)
 		  .catch(error => console.log('ERROR @ AuthService#saveNewUser() :', error));

@@ -22,9 +22,15 @@ export class PostFormComponent implements OnInit {
   }
 
   publish(){
-    this.postService.publishPost(this.postForm.controls['message'].value);
-    this.postForm.controls['message'].setValue('');
-    this.postForm.markAsUntouched();
+    this.postForm.controls['message'].disable();
+    this.postService.publishPost(this.postForm.controls['message'].value)
+    .then(()=>{
+      this.postForm.controls['message'].setValue('');
+      this.postForm.controls['message'].enable();
+      this.postForm.markAsPristine();
+      this.postForm.markAsUntouched();
+      this.postForm.updateValueAndValidity();
+    });
   }
 
 }
